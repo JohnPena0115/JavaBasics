@@ -16,6 +16,12 @@ public class Main {
         System.out.println(createFullName("Bugs", "Bunny"));
 
         System.out.println(NameGenerator.generateFullName("Daffy", "Duck"));
+
+        NameGenerator testing = new NameGenerator("Charlie", "Brown");
+
+        String output = testing.generateFullName();
+
+        System.out.println(output);
     }
 
     public static String createFullName(String firstName, String lastName) {
