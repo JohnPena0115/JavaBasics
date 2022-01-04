@@ -12,5 +12,14 @@ public class Main {
         String fullName = firstName + " " + lastName;
 
         System.out.println(fullName);
+
+        System.out.println(createFullName("Bugs", "Bunny"));
+    }
+
+    public static String createFullName(String firstName, String lastName) {
+
+        String output = firstName + " " + lastName;
+
+        return output;
     }
 }
