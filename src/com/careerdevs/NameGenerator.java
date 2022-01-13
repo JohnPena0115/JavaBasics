@@ -1,6 +1,6 @@
 package com.careerdevs;
 
-class NameGenerator {
+public class NameGenerator {
 
     String firstName;
     String lastName;
