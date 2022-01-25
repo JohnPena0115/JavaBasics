@@ -10,6 +10,7 @@ public class UserInterface {
         Scanner read = new Scanner(System.in);
 
         //Keeps track of invalid input attempts
+        //Resets after every while question block
         int failedAttempts = 0;
 
         //Used in conjunction with failedAttempts.
@@ -17,11 +18,12 @@ public class UserInterface {
         //constitutes a lack of good faith on part of user.
         final int TROLL_CONFIRMED = 3;
 
-        //1st Question => char input
+        //1st Question => expected input => char
         System.out.print("Welcome to the TI-84 challenge. Are you ready to proceed? (Y or N): ");
 
+
         //Continuously prompts user for a char of 'Y' or 'N' until
-        //one is provided.
+        //one is provided or until 3 failed attempts have been recorded
         while (true) {
 
             String isValid = read.nextLine();
@@ -34,9 +36,9 @@ public class UserInterface {
                     System.out.print("Please only enter 'Y' or 'N': ");
                 } else {
                     System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
-                    break;
+                    return;
                 }
-                continue;
+                 continue;
             }
 
             char lowerCase = Character.toLowerCase(isValid.charAt(0));
@@ -54,10 +56,8 @@ public class UserInterface {
                 } else {
                     System.out.println("");
                     System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
-                    break;
+                    return;
                 }
-
-
             }else{
 
                 switch (lowerCase) {
@@ -69,7 +69,7 @@ public class UserInterface {
                                 to jeopardize it. The floor hatch will open soon.
                                 Safe travels.
                                 """);
-                        break;
+                        return;
                     default:
 
                         System.out.println("");
@@ -89,14 +89,15 @@ public class UserInterface {
         //Resets failedAttempts to 0 to allow for honest mistakes.
         failedAttempts = 0;
 
-        //2nd Question => String input
+        //2nd Question => expected input => string
         System.out.print("What is your name?: ");
 
+        String isNameValid = read.nextLine();
+
         //Continuously prompts user for name until one
-        //is provided
+        //is provided or 3 failed attempts have been recorded.
         while (true){
 
-            String isNameValid = read.nextLine();
 
             //Null Filter
             if (isNameValid.length() == 0) {
@@ -105,11 +106,12 @@ public class UserInterface {
                 if (failedAttempts != TROLL_CONFIRMED){
                     System.out.print("""
                                 You seem to have pressed enter without typing anything out.
-                                Please enter your name: 
                                 """);
+                    System.out.print("Please enter your name: ");
+                    isNameValid = read.nextLine();
                 } else {
                     System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
-                    break;
+                    return;
                 }
                 continue;
             }
@@ -127,20 +129,141 @@ public class UserInterface {
                     System.out.println("");
 
                     if (failedAttempts != TROLL_CONFIRMED) {
-                        System.out.print("Please enter only alphabetic characters: ");
-                        continue;
+                        System.out.print("Please only enter alphabetic characters: ");
+                        isNameValid = read.nextLine();
+                        //break;
 
                     } else {
 
                         System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
+                        return;
+                    }
+                }
+
+            }
+
+            System.out.println("");
+            System.out.println("Please to meet you " + isNameValid.trim() + ".");
+            break;
+        }
+
+        failedAttempts = 0;
+
+        //3rd Question => Byte input
+        System.out.println("");
+        System.out.println("""
+                We have been tasked to make sure you master the various primitive Java data types.\s
+                However, before you can master them you must be exposed to them. We will start out\s
+                very simply. 
+                """);
+        System.out.print("What is your age?: ");
+
+        String isByteValid = read.nextLine();
+
+
+        //Continuously prompts user for age until when is provided
+        while(true){
+
+            //boolean numChar = false;
+
+
+
+
+
+            //Null Filter
+            if (isByteValid.length() == 0) {
+                System.out.println("");
+                failedAttempts++;
+                if (failedAttempts != TROLL_CONFIRMED){
+                    System.out.println("""
+                                You seem to have pressed enter without typing anything out.
+                                """);
+                    System.out.print("Please enter your age: ");
+                    isByteValid = read.nextLine();
+
+                } else {
+                    System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
+                    break;
+                }
+                continue;
+            }
+
+
+
+            //Screens for non-numeric characters
+
+            for (int index = 0; index < isByteValid.length(); index++){
+
+                if (!(Character.isDigit(isByteValid.charAt((index))))){
+
+                    failedAttempts++;
+                    System.out.println("");
+
+                    if (failedAttempts != TROLL_CONFIRMED) {
+
+                       // System.out.println("Value of index: " + index);
+                        // System.out.println("Testing1 => Value of isByteValid " + isByteValid);
+                        System.out.print("Please type in your age using only numeric characters: ");
+                        isByteValid = read.nextLine();
                         break;
+
+                    } else {
+
+                        System.out.println("Testing2 => Value of isByteValid " + isByteValid);
+
+                       // numChar = false;
+                        System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
+
+
+                        return;
+
                     }
                 }
             }
 
-            System.out.println("");
-            System.out.println("Please to meet you " + isNameValid + ".");
+            /*if (!numChar && failedAttempts == TROLL_CONFIRMED) {
+
+                break;
+            }
+
+             */
+
+
+
+           if (Integer.parseInt(isByteValid) > 127){
+
+               failedAttempts++;
+
+                if (failedAttempts != TROLL_CONFIRMED) {
+
+                    System.out.println("");
+                    System.out.print("Please retype your age: ");
+
+                    isByteValid = read.nextLine();
+
+                } else {
+
+                    System.out.println("");
+                    System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
+                    break;
+                }
+
+            }
+
+
+           /* if (notNumChar){
+
+                byte age = Byte.parseByte(isByteValid);
+            } else {
+
+                break;
+            }
+
+
+             //*/
         }
+
+
     }
 }
 
