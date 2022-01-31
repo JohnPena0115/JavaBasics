@@ -17,7 +17,19 @@ public class Company {
 
      @Override
 
-    public String toString() {
+     public String toString(){
+
+         String nameFormatted = Character.toLowerCase(name.charAt(0)) + name.substring(1);
+         NumberFormat humanFriendlyMarketCap = NumberFormat.getInstance();
+
+         return "Company{" +
+                 "name=\""+ nameFormatted + "\"" +
+                 ", founded=" + yearEstablished +
+                 ", marketCap=" + humanFriendlyMarketCap.format(marketCap) +
+                 "}";
+     }
+
+    public String displayString() {
 
          String nameFormatted = Character.toUpperCase(name.charAt(0)) + name.substring(1);
          NumberFormat displayFriendlyMarketCap = NumberFormat.getInstance();
