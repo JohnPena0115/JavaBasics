@@ -21,6 +21,16 @@ public class Country {
 
     public String toString(){
 
+        return "Country{" +
+                "name=\"" + name + "\"" +
+                ", capital=\"" + capital + "\"" +
+                ", population=" + population +
+                ", northernHemisphere=" + isNorthernHemisphere + "}";
+
+    }
+
+    public String displayString(){
+
         String nameFormatted = Character.toUpperCase(name.charAt(0)) + name.substring(1);
         NumberFormat displayFriendlyPopulation = NumberFormat.getInstance();
 
@@ -35,7 +45,7 @@ public class Country {
         } else {
 
             System.out.println("");
-            return "The capital of " + nameFormatted + " is " + capital + ". " +
+            return "The capital of " + nameFormatted + " is " + capital + ". d" +
                     nameFormatted + " has a population of " + displayFriendlyPopulation.format(population) +
                     "\nand no portion of the country lies in the northern hemisphere.";
         }
