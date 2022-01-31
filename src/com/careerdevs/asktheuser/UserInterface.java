@@ -115,23 +115,48 @@ public class UserInterface {
         }
 
         System.out.println("");
-        System.out.println("Let's move away from storing whole numbers and look at how we could store\n" +
+        System.out.print("Let's move away from storing whole numbers and look at how we could store\n" +
                 "decimal numbers in Java. Though a float can store the decimal 3.4028235 followed by\n" +
                 "38 zeroes, it's accuracy only extends to 6 or 7 digits. If you multiplied the constant pi\n" +
                 "by 2 in Java you would get '6.2831855'. Type out the number you get when you google\n" +
                 "'pi * 2' to see the difference in accuracy: ");
         float floatResponse = read.nextFloat();
+        float floatToCompare = 6.2831853F;
         read.nextLine();
         System.out.println("");
 
-        if(floatResponse == 6.2831853) {
+        if(Float.compare(floatResponse, floatToCompare) == 0) {
 
             System.out.println("Great job. Your google-fu is strong.");
 
         } else {
 
-            System.out.println("Not quite. 6.2831853 would have been the  correct answer.");
+            System.out.println("Not quite. 6.2831853 would have been the correct answer.");
 
         }
+
+        System.out.println("");
+        System.out.print("Finally, the last Java primitive data type we will deal with is the double.\n" +
+                "Just like a float, a double can be used to store decimal numbers. However, with a\n" +
+                "double you have 15 digits of precision as opposed to roughly 7 digits. Amazingly, the first 62.8\n" +
+                "trillion digits of pi have already been determined. Type out the first 15 digits you see\n" +
+                "when you google the pi constant: ");
+
+        double doubleResponse = read.nextDouble();
+        double doubleToCompare = 3.14159265358979;
+        System.out.println("");
+
+        if(Double.compare(doubleResponse, doubleToCompare) == 0) {
+
+            System.out.println("Congrats.");
+
+        }else {
+
+            System.out.println("Not quite. 3.14159265358979 was the answer we were looking for.");
+        }
+
+        System.out.println("");
+        System.out.println("Remember, though you can store really large decimals in a double\n" +
+                "only the first 15 digits are considered accurate.");
     }
 }
