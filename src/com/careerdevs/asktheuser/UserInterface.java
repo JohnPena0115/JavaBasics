@@ -1,6 +1,6 @@
 package com.careerdevs.asktheuser;
 
-
+import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -9,236 +9,129 @@ public class UserInterface {
 
         Scanner read = new Scanner(System.in);
 
-        //Keeps track of invalid input attempts
-        //Resets after every while question block
-        int failedAttempts = 0;
+        NumberFormat input = NumberFormat.getInstance();
 
-        //Used in conjunction with failedAttempts.
-        //Assumption that 3 invalid inputs in a row
-        //constitutes a lack of good faith on part of user.
-        final int TROLL_CONFIRMED = 3;
-
-//-----------------------------------------------------------------------------------------------------
-
-        //1st Question => expected input => char
-        System.out.print("Welcome to the TI-84 challenge. Are you ready to proceed? (Y or N): ");
-
-        //Label loop identifier => allows us to break out of an outer loop
-        //from within the scope of an inner loop or switch statement
-        first:
-
-        //Continuously prompts user for a char of 'Y' or 'N' until
-        //one is provided or until 3 failed attempts have been recorded
-        while (true) {
-
-            String isValid = read.nextLine();
-
-            //Null input filter
-            if (isValid.length() == 0) {
-                System.out.println("");
-                failedAttempts++;
-                if (failedAttempts != TROLL_CONFIRMED){
-                    System.out.print("Please only enter 'Y' or 'N': ");
-                } else {
-                    System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
-                    return;
-                }
-                 continue;
-            }
-
-            char lowerCase = Character.toLowerCase(isValid.charAt(0));
-
-            //Filters for strings with a length greater than one, numbers,
-            //and chars that are not a lower or uppercase 'Y' or 'N'
-            if (isValid.length() > 1 ||
-                    Character.isDigit(isValid.charAt(0)) ||
-                    lowerCase != 'y' && lowerCase != 'n' ) {
-
-                failedAttempts++;
-                if (failedAttempts != 3) {
-                    System.out.println("");
-                    System.out.print("Please only enter 'Y' or 'N': ");
-                } else {
-                    System.out.println("");
-                    System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
-                    return;
-                }
-            }else{
-
-                switch (lowerCase) {
-                    case 'n':
-
-                        System.out.println("");
-                        System.out.println("""
-                                This mission is too important for me to allow you\s
-                                to jeopardize it. The floor hatch will open soon.
-                                Safe travels.
-                                """);
-                        return;
-                    default:
-
-                        System.out.println("");
-                        System.out.println("""
-                                Great! I can see you have great enthusiasm and confidence
-                                in the mission. Let's proceed forward.  
-                                """);
-
-                        break first;
-                }
-            }
-        }
-
-//----------------------------------------------------------------------------------------
-
-        //Resets failedAttempts to 0 to allow for honest mistakes.
-        failedAttempts = 0;
-
-        //2nd Question => expected input => string
+        System.out.println("");
         System.out.print("What is your name?: ");
-
-        String isNameValid = read.nextLine();
-
-        second:
-
-        //Screens for invalid input. If detected, reprompts user
-        //until 3 failed attempts have been recorded
-        while (true){
-
-            //Null Filter
-            if (isNameValid.length() == 0) {
-                System.out.println("");
-                failedAttempts++;
-                if (failedAttempts != TROLL_CONFIRMED){
-                    System.out.print("""
-                                You seem to have pressed enter without typing anything out.
-                                """);
-                    System.out.print("Please enter your name: ");
-                    isNameValid = read.nextLine();
-                    continue;
-                } else {
-                    System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
-                    return;
-                }
-            }
-
-            //Screens for non-alphabetic characters
-            for (int index = 0; index < isNameValid.length(); index++){
-
-                if (!(isNameValid.charAt(index) >= 'a' && isNameValid.charAt(index) <= 'z'||
-                    isNameValid.charAt(index) >= 'A' && isNameValid.charAt(index) <= 'Z' ||
-                    isNameValid.charAt(index) == 32) ){
-
-                    System.out.println("");
-                    failedAttempts++;
-
-                    if (failedAttempts != TROLL_CONFIRMED) {
-
-                        System.out.print("Please only enter alphabetic characters: ");
-                        isNameValid = read.nextLine();
-                        continue second;
-                    } else {
-                        System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
-                        return;
-                    }
-                }
-            }
-            //Breaks out of while loop if valid input has been received
-            break;
-        }
-//-----------------------------------------------------------------------------------------
+        String name = read.nextLine();
 
         System.out.println("");
-        System.out.println("Please to meet you " + isNameValid.trim() + ".");
+        System.out.print("Welcome, " + name + ". Are you ready to proceed forward (Y or N)?: ");
+        char charConfirmation = read.next().charAt(0);
 
-        failedAttempts = 0;
+        if (charConfirmation == 'Y') {
 
-//------------------------------------------------------------------------------------------
-        //3rd Question => Byte input
-        System.out.println("");
-        System.out.println("""
-                We have been tasked to make sure you master the various primitive Java data types.\s
-                However, before you can master them you must be exposed to them. We will start out\s
-                very simply. 
-                """);
-        System.out.print("What is your age?: ");
+            System.out.println("");
+            System.out.println("Great, let's proceed forward " + name + ".");
 
-        String isByteValid = read.nextLine();
+        } else {
 
-        third:
-
-        //Continuously screens for invalid input until 3 failed attempts have
-        //been recorded. If invalid, reprompts user. If valid,
-        while(true){
-
-            //Null Filter
-            if (isByteValid.length() == 0) {
-                System.out.println("");
-                failedAttempts++;
-                if (failedAttempts != TROLL_CONFIRMED){
-                    System.out.println("""
-                                You seem to have pressed enter without typing anything out.
-                                """);
-                    System.out.print("Please enter your age: ");
-                    isByteValid = read.nextLine();
-                    continue;
-
-                } else {
-                    System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
-                    return;
-                }
-            }
-
-            //Screens for non-numeric characters. Nothing is done if all
-            //chars are digits.
-            for (int index = 0; index < isByteValid.length(); index++){
-
-                if (!(Character.isDigit(isByteValid.charAt((index))))){
-
-                    failedAttempts++;
-                    System.out.println("");
-
-                    if (failedAttempts != TROLL_CONFIRMED) {
-
-                        System.out.print("Please type in your age using only numeric characters: ");
-                        isByteValid = read.nextLine();
-                        continue third;
-
-                    } else {
-
-                        System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
-                        return;
-
-                    }
-                }
-            }
-
-            //If execution reaches here, isByteValid should only contain numeric chars.
-            //Checks to see if the value in isByteValid can be stored in a byte.
-           if (Integer.parseInt(isByteValid) > 127){
-
-               failedAttempts++;
-
-                if (failedAttempts != TROLL_CONFIRMED) {
-
-                    System.out.println("");
-                    System.out.print("Something went wrong. Please retype your age: ");
-                    isByteValid = read.nextLine();
-
-                } else {
-
-                    System.out.println("");
-                    System.out.println("You have committed a David. Hal-9000 will be speaking with you.");
-                    break;
-                }
-            }
-
-           break;
+            System.out.println("");
+            System.out.println("Sorry to hear that " + name + ". Have a nice day.");
         }
 
-        byte age = Byte.valueOf(isByteValid);
         System.out.println("");
-        System.out.println( isNameValid + ", what a wonderful time to be " + age +".");
+        System.out.println(name + ", the following is just a series of questions meant to expose\n"+
+                "you to Java primitive types. Your first question, down below will deal\n" +
+                "with the primitive boolean.");
+        System.out.println("");
+        System.out.print("Is 0 an even or odd number(true or false)? :");
+        boolean booleanResponse = read.nextBoolean();
+
+        if(booleanResponse){
+
+            System.out.println("");
+            System.out.println("Incorrect. 0 is neither even or odd. Nevertheless, you typed a\n"+
+                    "value, 'true', that could be stored as a boolean. The only other value\n" +
+                    "could be stored as a boolean is 'false.");
+        } else {
+
+            System.out.println("");
+            System.out.println("Correct. O is neither even or odd so 'false' is the correct\n" +
+                    "answer. The keyword false can be stored as a boolean. The only\n" +
+                    "other keyword that could be stored as a boolean is 'true'.");
+        }
+
+        System.out.println("");
+        System.out.print("Let's proceed on to the byte primitive type. Type a number\n" +
+                "anywhere from -128 to 127: ");
+        byte byteResponse = read.nextByte();
+        read.nextLine();
+        System.out.println("");
+        System.out.println("Great, the number you provided, " +byteResponse + ", can be stored as a\n" +
+                "byte. Any number smaller than -128 or greater than 127\n"  +
+                "would have thrown a 'value out of range' exception.");
+
+        System.out.println("");
+        System.out.print("Let's tackle the 'short' primitive data type. Pick a\n" +
+                "anywhere from -32,000 to 32,000: ");
+        short shortResponse = read.nextShort();
+        read.nextLine();
+        System.out.println("");
+        System.out.println("Great, the number you provided, " + input.format(shortResponse) + ", can be stored as a\n" +
+                "short. Actually, short's can store slightly larger and smaller numbers than the ones\n" +
+                "I provided you with. Any number equal to or larger than -32,768 and equal to or smaller\n" +
+                "than 32,767 could be stored as a valid short. The Java compiler would throw an exception\n" +
+                "if you tried to assign values outside of that range to a short variable.");
+
+        System.out.println("");
+        System.out.print("Just as a short can store larger whole numbers than a byte, an int, another\n" +
+                "Java primitive data type, can store larger whole numbers than a short. The\n" +
+                "largest value a int can hold is " + input.format(Integer.MAX_VALUE)+ "." + " Based on the pattern\n" +
+                "you have seen so far, what would you say is the smallest value an int can store?: ");
+        int intResponse = read.nextInt();
+        read.nextLine();
+        System.out.println("");
+
+        if (intResponse != Integer.MIN_VALUE) {
+
+            System.out.println("Not quite. Based on the pattern we have seen so far in order\n" +
+                    "to get the smallest value an int could store we would add 1\n" +
+                    "to the max possible value an int could store and negate that result.\n" +
+                    "The correct response for int would be " + input.format(Integer.MIN_VALUE) + ".");
+        }else{
+
+            System.out.println("Great job. You saw the pattern of adding 1 to " + input.format(Integer.MAX_VALUE)  +
+                    "\nand then negating that result => " + input.format(Integer.MIN_VALUE) + ".");
+        }
+
+        System.out.println("");
+        System.out.print("Let's tackle the last primitive data type that deals with whole numbers => long.\n" +
+                "This time instead of giving the max value a 'long' could hold and asking you\n" +
+                "to figure out the min value, I will give the min value " + input.format(Long.MIN_VALUE)+ "\n" +
+                "and ask you to figure out the max value: ");
+        long longResponse = read.nextLong();
+        read.nextLine();
+        System.out.println("");
+
+        if (longResponse != Long.MAX_VALUE) {
+
+            System.out.println("Not quite. This time you needed to take the absolute value of adding\n" +
+                    "1 to " + input.format(Long.MIN_VALUE) + ".\n\n" + input.format(Long.MAX_VALUE) + " would have been the correct answer.");
+        } else {
+
+            System.out.println(input.format(Long.MAX_VALUE) + " is indeed the write answer.\n" +
+                    "Congratulations on picking up on the pattern.");
+        }
+
+        System.out.println("");
+        System.out.println("Let's move away from storing whole numbers and look at how we could store\n" +
+                "decimal numbers in Java. Though a float can store the decimal 3.4028235 followed by\n" +
+                "38 zeroes, it's accuracy only extends to 6 or 7 digits. If you multiplied the constant pi\n" +
+                "by 2 in Java you would get '6.2831855'. Type out the number you get when you google\n" +
+                "'pi * 2' to see the difference in accuracy: ");
+        float floatResponse = read.nextFloat();
+        read.nextLine();
+        System.out.println("");
+
+        if(floatResponse == 6.2831853) {
+
+            System.out.println("Great job. Your google-fu is strong.");
+
+        } else {
+
+            System.out.println("Not quite. 6.2831853 would have been the  correct answer.");
+
+        }
     }
 }
-
-
