@@ -4,6 +4,7 @@ public class Recursion {
 
         countdownRecursive(15);
         countdownIterative(4);
+        System.out.println(sumRecursive(12));
 
     }
 
@@ -35,6 +36,18 @@ public class Recursion {
             }
             number--;
 
+        }
+    }
+
+    public static int sumRecursive(int num) {
+
+        if (num == 1) {
+
+            return num;
+
+        } else {
+
+            return  num + sumRecursive(num - 1) ;
         }
     }
 }
