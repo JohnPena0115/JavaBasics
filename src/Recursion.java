@@ -12,7 +12,6 @@ public class Recursion {
         if (number == 0) {
 
             System.out.println(number + "\n");
-            return;
 
         }else {
 
@@ -28,14 +27,13 @@ public class Recursion {
             if(number == 0) {
 
                 System.out.println(number + "\n");
-                number--;
 
             } else {
 
                 System.out.println(number);
-                number--;
 
             }
+            number--;
 
         }
     }
